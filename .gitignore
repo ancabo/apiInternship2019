@@ -1,0 +1,11 @@
+# Eclipse
+.classpath
+.project
+.metadata
+/.settings/
+output.txt
+
+# ignore an entire directory
+/target/
+/logs/
+/test-output/

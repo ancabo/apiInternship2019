@@ -1,0 +1,75 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>apiInternship</groupId>
+  <artifactId>apiInternship</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+   <properties>
+      <testng.version>6.10</testng.version>
+      <cucumber.version>3.0.2</cucumber.version>
+   </properties>
+      <dependencies>
+      <dependency>
+         <groupId>org.testng</groupId>
+         <artifactId>testng</artifactId>
+         <version>${testng.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${cucumber.version}</version>
+    </dependency>
+     <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+        </dependency>
+      <!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+	<dependency>
+   	 <groupId>org.apache.httpcomponents</groupId>
+   	 <artifactId>httpclient</artifactId>
+    	<version>4.5.8</version>
+	</dependency>	
+	<dependency>
+  	  <groupId>org.json</groupId>
+ 	  <artifactId>json</artifactId>
+      <version>20180813</version>
+	</dependency>  
+	<dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.4</version>
+        </dependency>	
+	 </dependencies>
+	 
+	    <build>
+      <plugins>
+    <!--      <plugin>
+            <groupId>org.jsonschema2pojo</groupId>
+            <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+            <version>0.5.1</version>
+            <configuration>
+                   <sourceDirectory>${basedir}/src/main/resources/schema</sourceDirectory>
+                   <targetPackage>com.github.entities</targetPackage>
+            	   <sourceType>json</sourceType>
+            </configuration>
+            <executions>
+            	<execution>
+            		<goals>
+            		<goal>generate</goal>
+            		</goals>
+            	</execution>
+            </executions>
+         </plugin> --> 
+               
+         <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.6.1</version>
+            <configuration>
+               <source>1.8</source>
+               <target>1.8</target>
+            </configuration>
+         </plugin>
+                      </plugins>
+   </build>
+</project>

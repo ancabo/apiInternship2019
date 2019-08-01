@@ -1,0 +1,10 @@
+{
+  "id": 777,
+  "username": "internship",
+  "firstName": "intern",
+  "lastName": "ship",
+  "email": "anca.bota@siemens.com",
+  "password": "internship2019",
+  "phone": "string",
+  "userStatus": 0
+}
