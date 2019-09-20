@@ -1,10 +1,14 @@
 package common;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.Header;
+import org.apache.http.ParseException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 
 public class ResponseUtils {
@@ -55,6 +59,28 @@ public class ResponseUtils {
 		boolean isHeader = headers.stream().anyMatch(header -> headerName.equalsIgnoreCase(header.getName()));
 		
 		return isHeader;		
+	}
+	
+	public JSONObject getBody(CloseableHttpResponse response) throws ParseException, IOException{
+		String body = EntityUtils.toString(response.getEntity());
+		JSONObject jsonBody = new JSONObject(body);
+		return jsonBody;
+	}
+	
+//	public <T> T getAttribValueFromBody (JSONObject body, String attrib){
+//		@SuppressWarnings("unchecked")
+//		T idValue = (T)getValueForKey(body, attrib);
+//		return idValue;
+//	}
+	
+	public Integer getAttribValueFromBody (JSONObject body, String attrib){
+		Integer idValue = (Integer) getValueForKey(body, attrib);
+		return idValue;
+	}
+	
+	
+	private Object getValueForKey(JSONObject jsonBody, String key) {
+		return jsonBody.get(key);		
 	}
 
 }

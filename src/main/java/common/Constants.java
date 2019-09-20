@@ -8,6 +8,7 @@ public class Constants {
 	public static final String BASE_ENDPOINT_SWAGGER_INVENTORY = "/store/inventory";
 	public static final String BASE_ENDPOINT_ADD_PET = "/pet"; 
 	public static final String BASE_ENDPOINT_ADD_USER = "/user";
+	public static final String BASE_ENDPOINT_ORDER = "/store/order";
 	
 	//Headers
 	public static final String ALLOW_METHODS = "Access-Control-Allow-Methods";

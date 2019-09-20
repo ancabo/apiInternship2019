@@ -1,18 +1,23 @@
 package stepDefinition;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 
 import org.apache.http.Header;
+import org.apache.http.ParseException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.testng.asserts.SoftAssert;
@@ -20,6 +25,7 @@ import org.testng.asserts.SoftAssert;
 import common.Constants;
 import common.ResponseUtils;
 import cucumber.api.java.en.*;
+import entities.Order;
 
 public class TestSteps {
 	private CloseableHttpClient client; 
@@ -30,9 +36,11 @@ public class TestSteps {
 	SoftAssert softAssert = new SoftAssert();
 	
 	@Given("^I have the API url as \"([^\"]*)\"$")
-	public void getUrl(String url){
+	public void getUrl(String apiUrl){
+		url = Constants.BASE_ENDPOINT_SWAGGER + apiUrl;
 		client = HttpClientBuilder.create().build();
 		get = new HttpGet(url);
+		System.out.println("URL: " + url );
 	}
 	
 	
@@ -83,6 +91,39 @@ public class TestSteps {
 		JSONObject jsonObject = common.JsonUtils.parseJSONFile(System.getProperty("user.dir") + "\\testData\\" + bodyPath);		
 		request.setEntity(new StringEntity(jsonObject.toString(), ContentType.APPLICATION_JSON));		
 		response = client.execute(request);		
+	}
+	
+	@Then("The order with ID {int} is returned")
+	public void getOrderIdFromResponse(int orderID) throws ParseException, IOException{
+		ResponseUtils ru = new ResponseUtils();
+		JSONObject body = ru.getBody(response);
+		Integer orderNumber = ru.getAttribValueFromBody(body, Order.ORDER_ID);
+		assertEquals(orderNumber, Integer.valueOf(orderID), "The returned order is not as expected. Expected: " + orderID + " Actual: " + orderNumber);		
+	}
+	
+	@When("^Delete the order \"([^\"]*)\"$")
+	public void deleteOrder(String orderId) throws ClientProtocolException, IOException{
+		String url = Constants.BASE_ENDPOINT_SWAGGER + Constants.BASE_ENDPOINT_ORDER + "/" + orderId;		
+		System.out.println("Delete url: " + url);
+		client = HttpClientBuilder.create().build();
+		HttpDelete request = new HttpDelete(url);
+		response = client.execute(request);			
+	}
+	
+	@Then("Check pets more than {int}")
+	public void getPetByStatus (int expectedPets) throws ParseException, IOException{
+	//	ResponseUtils ru = new ResponseUtils();
+		String body = EntityUtils.toString(response.getEntity());
+		
+		JSONArray response_json = new JSONArray(body);	
+		
+		
+		
+//		JSONObject body = ru.getBody(response);
+		int pets = response_json.length();
+		System.out.println("Available pets: " + body.length());
+		assertTrue(expectedPets <= pets);
+		
 	}
 	
 }
